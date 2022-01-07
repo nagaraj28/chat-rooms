@@ -1,12 +1,14 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import GroupList from './components/grouplist/grouplist';
+import ChatWindow from './components/chatwindow/chatwindow';
 
 function App() {
   return (
-    <div>
-      chat
-    </div>
+  <div className="grid">
+    <GroupList/>
+    <ChatWindow/>
+  </div>
   );
 }
 
