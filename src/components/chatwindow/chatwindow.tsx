@@ -1,9 +1,8 @@
-import { useContext,useEffect} from 'react';
+import { useContext} from 'react';
 import { Context } from '../../context/context';
 import ChatMessages from '../chatMessages/chatMessages';
 
 function ChatWindow() {
-  // console.log("chatWindow");
   const {currentRoom,socket}:any = useContext(Context);
 
   return (
