@@ -1,20 +1,31 @@
-import React from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import NavBar from '../navbar/nav';
 import "./grouplist.css";
+import axios from 'axios';
+import { Context } from '../../context/context';
 
 function GroupList() {
-    const roomList:any[]=["","","","","","","","",""];
+    const emptyRooms:any[] = [];
+    const [rooms,setRooms] = useState(emptyRooms);
+    const {changeRoom}:any = useContext(Context);
+
+    useEffect(()=>{
+        axios.get("http://localhost:5000/chat/rooms/admin").then((res:any)=>{
+            setRooms(res.data.data);
+        });
+    },[]);
   return (
    <div>
-       <h1>grouplist</h1>
+       <NavBar/>
        <div className="group-ctnr">
-           <hr/>
         {
-            roomList.map((room)=>{
-             return   <div className='chatheader'>
+            rooms?.length>0&&rooms.map((room)=>{
+             return   <div key={room._id} className='chatheader' onClick={()=>{
+                changeRoom(room);
+    }}>
                         <hr/>
         <h4>
-            RoomName
+            {room.roomName}
         </h4>
         <p>
             user: last Message

@@ -1,11 +1,22 @@
-import React from 'react';
+import { useContext,useEffect} from 'react';
+import { Context } from '../../context/context';
+import ChatMessages from '../chatMessages/chatMessages';
 
 function ChatWindow() {
+  // console.log("chatWindow");
+  const {currentRoom,socket}:any = useContext(Context);
+
   return (
-   <div>
-   THis is ChatWindow
-   </div>
+    <div>
+      <h1>{
+        socket&&socket.id
+      }</h1>
+       {
+      currentRoom?<ChatMessages currentroom={currentRoom}  socket={socket} />:
+       <h4>Welcome to chat rooms! </h4>
+     }
+    </div>
+    
   );
 }
-
 export default ChatWindow;
