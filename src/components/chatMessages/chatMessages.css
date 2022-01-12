@@ -1,0 +1,20 @@
+.chatmsgctnr{
+    overflow: scroll;
+    height: 89vh;
+    margin-right: 65px;
+    overflow-x: hidden;
+}
+.input-ctnr{
+    width: 100%;
+    display: flex;
+    border-radius: 10px;
+    height: 40px;
+}
+
+.txt-box{
+    width: 90%;
+    height: 60px;
+}
+.send-btn{
+
+}

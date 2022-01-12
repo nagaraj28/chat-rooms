@@ -1,7 +1,9 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState,useContext} from 'react';
 import { handleSendMessage } from '../chatwindow/chatWindowUtil';
 import { ChatRoomInterface } from './chatMessageInterface';
 import axios from 'axios';
+import { performClearRoomNotifications } from '../chatwindow/chatWindowUtil';
+import "./chatMessages.css";
 
 const ChatMessages: React.FC<ChatRoomInterface> = ({currentroom,socket}):JSX.Element=>{
 
@@ -9,19 +11,37 @@ const ChatMessages: React.FC<ChatRoomInterface> = ({currentroom,socket}):JSX.Ele
     const [currentMessagesStore,setCurrentMessagesStore] = useState(emptyArr);
     const [typedText,setTypedText] = useState("");
     const [dbMessages,setDbMessages] = useState(emptyArr);
+   
     useEffect(()=>{
-    axios.get(`http://localhost:5000/messages/${currentroom._id}`).then((res:any)=>{
-        // console.log(res.data.messages);
+        if(currentroom.messagecount>0){
+            performClearRoomNotifications(currentroom.roomid,"admin");
+        }
+    axios.get(`http://localhost:5000/messages/${currentroom.roomid}`).then((res:any)=>{
         setDbMessages(res.data.messages);
     });
     setCurrentMessagesStore(emptyArr);    
     const perFormMsgMerge  = (msg:any)=>{
-    setCurrentMessagesStore((prevState:any[])=>[...prevState,msg]);
+        setCurrentMessagesStore((prevState:any[])=>[...prevState,msg]);
+        }
+        socket.on(currentroom.roomid,(msg:any)=>{
+            perFormMsgMerge(msg);
+        });
+    return ()=>{
+        socket.off(currentroom.roomid);
+        setCurrentMessagesStore(emptyArr);    
     }
-    socket.on(currentroom._id,(msg:any)=>{
-    perFormMsgMerge(msg);
-    });
-    },[currentroom]);
+    },[currentroom.roomid]);
+   
+    // useEffect(()=>{
+    //     console.log("updating",currentroom.messagecount);
+    //     if(currentroom.messagecount>0){
+    //         performClearRoomNotifications(currentroom.roomid,"admin");
+    //     }
+    //     do{
+    //         performClearRoomNotifications(currentroom.roomid,"admin");
+    //     }while(currentroom.messagecount>0)
+    // });
+
 
     const getTime = (date:any):string=>{
         var created_date = new Date(date);
@@ -29,12 +49,11 @@ const ChatMessages: React.FC<ChatRoomInterface> = ({currentroom,socket}):JSX.Ele
         const hours = created_date.getHours()===0?"12":created_date.getHours()>12?created_date.getHours()-12:created_date.getHours();
         return hours+":"+created_date.getMinutes()+" "+amORpm;
     }
-   
+
     return (
     <div>
         {
-        <div>
-        <h3>{currentroom.roomName}</h3>
+        <div className="chatmsgctnr">
         <ul>
         {
            dbMessages&&dbMessages.map((eachMessage:any,index:number)=><li key={`${eachMessage.createdAt}${index}`}>
@@ -54,17 +73,18 @@ const ChatMessages: React.FC<ChatRoomInterface> = ({currentroom,socket}):JSX.Ele
                </small> 
             </li>)
         }
-        <input type="text-box" value={typedText} onChange={(e)=>{
-           setTypedText(e.target.value);
-        }} />
-        <button onClick={()=>{
-            // console.log(typedText);
-            handleSendMessage(currentroom,socket,typedText);
-            setTypedText("");
-        }}>send</button>
        </ul>
        </div>
      }
+      <div className="input-ctnr">
+       <input className='input-box' type="text-box" value={typedText} onChange={(e)=>{
+           setTypedText(e.target.value);
+        }} />
+        <button onClick={()=>{
+            handleSendMessage(currentroom,socket,typedText);
+            setTypedText("");
+        }}>send</button>
+       </div>
     </div>
   );
 }
