@@ -2,6 +2,7 @@ import { useContext} from 'react';
 import { Context } from '../../context/context';
 import { SocketContext } from '../../context/scoketContext';
 import ChatMessages from '../chatMessages/chatMessages';
+import "./chatwindow.css";
 
 function ChatWindow() {
   const {currentRoom}:any = useContext(Context);
@@ -9,10 +10,14 @@ function ChatWindow() {
 
   // console.log("chat-window");
   return (
-    <div>
-      <h1>{
+    <div >
+     <div className='room-ctnr'>
+     <p className='room-title'>
+       {
         currentRoom&&currentRoom.roomName
-      }</h1>
+      }
+      </p>
+     </div>
        {
       currentRoom?.roomid&&(socket.connected || socket.disconnected)?<ChatMessages currentroom={currentRoom}  socket={socket} />:
        <h4>Welcome to chat rooms! </h4>

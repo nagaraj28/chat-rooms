@@ -1,20 +1,63 @@
 .chatmsgctnr{
     overflow: scroll;
-    height: 89vh;
+    height: 82vh;
     margin-right: 65px;
     overflow-x: hidden;
 }
 .input-ctnr{
     width: 100%;
     display: flex;
-    border-radius: 10px;
-    height: 40px;
+    padding: 20px;
+    background-color: #E7E5E4;
 }
 
 .txt-box{
-    width: 90%;
-    height: 60px;
+    width: 85% !important;
 }
-.send-btn{
+.snd-btn,.txt-box{
+    border-radius: 8px;
+    height: 45px;
+    outline: none;
+    border: 2px solid #DBEAFE;
+}
+.snd-btn{
+    width: 100px;
+    background-color: #ffff;
+    text-align: center;
+    font-weight: bold;
+}
+.txt-box{
+    font-size: 12px;
+    font-weight: 600;
+}
+.snd-btn:hover{
+    cursor: pointer;
+    background-color: #1D4ED8;
+    color: #fff;
+}
 
+.chat-window{
+    background-color: #EFF6FF;
+}
+.msg-head-ctnr{
+    display: grid;
+    grid-template-columns: 2% 98%;
+}
+.msg-ctnr{
+    background-color: #fff;
+    width: 70%;
+    margin: 40px;
+    padding:15px;
+    border-radius: 10px;
+}
+.img-ctnr{
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-top: 60px;
+}
+
+.txt-tym{
+    float: right;
+    font-size: 12px;
 }

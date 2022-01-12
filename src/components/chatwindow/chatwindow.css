@@ -1,0 +1,10 @@
+.room-ctnr{
+    width: 100%;
+    padding:45px 20px 20px;
+    background-color: #1D4ED8;
+    color: #ffff;
+}
+.room-title{
+    font-size: 25px;
+    font-style: italic;
+}
