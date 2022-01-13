@@ -1,0 +1,5 @@
+.find-rooms-ctnr{
+    width: 100%;
+    height: 80vh;
+    overflow-y: scroll;
+}

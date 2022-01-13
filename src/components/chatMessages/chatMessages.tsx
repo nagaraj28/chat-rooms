@@ -1,4 +1,4 @@
-import React, {useEffect, useState,useContext} from 'react';
+import React, {useEffect, useState} from 'react';
 import { handleSendMessage } from '../chatwindow/chatWindowUtil';
 import { ChatRoomInterface } from './chatMessageInterface';
 import axios from 'axios';
@@ -43,8 +43,6 @@ const ChatMessages: React.FC<ChatRoomInterface> = ({currentroom,socket}):JSX.Ele
     //         performClearRoomNotifications(currentroom.roomid,"admin");
     //     }while(currentroom.messagecount>0)
     // });
-
-
     const getTime = (date:any):string=>{
         var created_date = new Date(date);
         const amORpm = created_date.getHours()>=12?"PM":"AM";
@@ -52,6 +50,7 @@ const ChatMessages: React.FC<ChatRoomInterface> = ({currentroom,socket}):JSX.Ele
         return hours+":"+created_date.getMinutes()+" "+amORpm;
     }
 
+    
     return (
     <div className="chat-window">
         {
@@ -93,6 +92,7 @@ const ChatMessages: React.FC<ChatRoomInterface> = ({currentroom,socket}):JSX.Ele
         //     </li>)
         }
        </ul>
+       <div id='end'></div>
        </div>
      }
       <div className="input-ctnr">

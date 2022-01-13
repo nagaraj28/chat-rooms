@@ -6,6 +6,7 @@ import { Context } from '../../context/context';
 import { SocketContext } from '../../context/scoketContext';
 import { convertToReadableTime } from '../chatwindow/chatWindowUtil';
 import "../chatMessages/chatMessages.css";
+import GroupingComponent from './groupingComponent';
 
 
 function GroupList() {
@@ -34,27 +35,9 @@ function GroupList() {
        <NavBar/>
        <div className="group-ctnr">
         {
-            rooms?.length>0&&rooms.map(({notifications}:any)=>{
-             return   <div key={notifications.roomid} className='chatheader' onClick={()=>{
-                changeRoom(notifications);
-    }}>
-         <div className='grp-avatar'>
-                <img width="40" height="40" src={`https://avatars.dicebear.com/api/bottts/${notifications.roomid}.svg`} alt="profile-picture" />
-            </div>
-       <div >
-        <div className='grp-header'>
-           <h3 className="grp-name">{notifications.roomName}</h3>
-            <span className="grp-tym">{convertToReadableTime(notifications.updatedAt)}</span>
-        </div>
-        <div className='msg-body-ctnr'>
-        <p className={notifications.messagecount>0?"bold":""}>
-            {notifications.lastmessage}
-        </p>
-        {notifications.messagecount>0&&<p className='alert'>{notifications.messagecount}</p>}
-        </div>
-           </div>
-        </div>
-            })  
+            rooms?.length>0?rooms.map(({notifications}:any)=>{
+             return  <GroupingComponent key={notifications.roomid} room={notifications} />
+            }):<div>you have not joined in any rooms!</div>  
         }
        </div>
    </div>

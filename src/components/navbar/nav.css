@@ -10,3 +10,40 @@
 .add-icon{
     margin-left: 25px !important;
 }
+.modal-input-box-ctnr,.modal-btn-ctnr{
+    text-align: center;
+    padding-top: 30px;
+}
+
+.modal-input-box{
+    width: 250px;
+    height: 40px;
+    border-radius: none;
+    border-radius: 5px;
+    font-size: 15px;
+    font-weight: bold;
+}
+.primary-btn{
+    cursor: pointer;
+    font-size: 15px;
+    padding: 6px 12px;
+    border-radius: 5px;
+    background-color: rgb(17, 82, 147);
+    color: #fff;
+}
+
+.grp-name-label{
+    font-size: 18px;
+    font-weight: bolder;
+    margin-bottom: 10px;
+}
+.loading{
+    margin-top: 20px;
+    display:grid !important;
+    grid-template-columns: auto !important;
+    justify-content: center !important;
+}
+.err{
+    color: red;
+    font-size: 15px;
+}
