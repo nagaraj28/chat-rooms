@@ -8,6 +8,8 @@ const ContextProvider: React.FC<{}> = ({children})=>{
     const [currentRoom,setCurrentRoom] = useState(null);
     const [isModalOpenForCreateRoom,setIsModalOpenForCreateRoom] = useState(false);
     const [isModalOpenForFindingRooms,setIsModalOpenForFindingRooms] = useState(false);
+    const emptyArr:any[]= [];
+    const [globalNotificationsArray,setGlobalNotifications] = useState(emptyArr);
 
     function changeRoom(newRoom:any):void{
         // console.log("hey",newRoom);
@@ -23,9 +25,13 @@ const ContextProvider: React.FC<{}> = ({children})=>{
         setIsModalOpenForCreateRoom(false);
         setIsModalOpenForFindingRooms(false);
     }
+    function updateNotificationsArray(notificationsArr:any[]):void{
+        setGlobalNotifications(notificationsArr);
+    }
 
 
-    return <Context.Provider value={{currentRoom,changeRoom,isModalOpenForCreateRoom,isModalOpenForFindingRooms,changeIsModalOpenForCreateRoom,changeIsModalOpenForFindingRooms,closeAllModals}}>
+    return <Context.Provider value={{currentRoom,changeRoom,isModalOpenForCreateRoom,isModalOpenForFindingRooms,changeIsModalOpenForCreateRoom,changeIsModalOpenForFindingRooms,closeAllModals
+    ,updateNotificationsArray,globalNotificationsArray}}>
         {children}
     </Context.Provider>
 } 

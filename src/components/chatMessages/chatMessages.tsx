@@ -1,10 +1,11 @@
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import { handleSendMessage } from '../chatwindow/chatWindowUtil';
 import { ChatRoomInterface } from './chatMessageInterface';
 import axios from 'axios';
 import { performClearRoomNotifications } from '../chatwindow/chatWindowUtil';
 import "./chatMessages.css";
 import SendIcon from '@mui/icons-material/Send';
+import { Context } from '../../context/context';
 
 const ChatMessages: React.FC<ChatRoomInterface> = ({currentroom,socket}):JSX.Element=>{
 
@@ -12,7 +13,8 @@ const ChatMessages: React.FC<ChatRoomInterface> = ({currentroom,socket}):JSX.Ele
     const [currentMessagesStore,setCurrentMessagesStore] = useState(emptyArr);
     const [typedText,setTypedText] = useState("");
     const [dbMessages,setDbMessages] = useState(emptyArr);
-   
+    const {globalNotificationsArray}:any = useContext(Context);
+    // console.log(globalNotificationsArray);
     useEffect(()=>{
         if(currentroom.messagecount>0){
             performClearRoomNotifications(currentroom.roomid,"admin");
@@ -49,7 +51,9 @@ const ChatMessages: React.FC<ChatRoomInterface> = ({currentroom,socket}):JSX.Ele
         const hours = created_date.getHours()===0?"12":created_date.getHours()>12?created_date.getHours()-12:created_date.getHours();
         return hours+":"+created_date.getMinutes()+" "+amORpm;
     }
-
+    const joinRoom = (roomid:string,username:string,roomName:string):void=>{
+        axios.post("http://localhost:5000/chat/rooms/adduser",{roomid,username,roomName}).then(res=>console.log(res));
+    }
     
     return (
     <div className="chat-window">
@@ -91,23 +95,22 @@ const ChatMessages: React.FC<ChatRoomInterface> = ({currentroom,socket}):JSX.Ele
         //        </small> 
         //     </li>)
         }
+        
        </ul>
        <div id='end'></div>
        </div>
      }
-      <div className="input-ctnr">
-       <input placeholder='enter your message here to send...' className='txt-box' type="text-box" value={typedText} onChange={(e)=>{
-           setTypedText(e.target.value);
-        }} />
-        <SendIcon sx={{ fontSize: 38}} className='snd-btn' onClick={()=>{
-            handleSendMessage(currentroom,socket,typedText);
-            setTypedText("");
-        }} />
-        {/* <button className='snd-btn' onClick={()=>{
-            handleSendMessage(currentroom,socket,typedText);
-            setTypedText("");
-        }}>send</button> */}
-       </div>
+      {
+          globalNotificationsArray.some((room:any)=>room.notifications.roomid===(currentroom.roomid?currentroom.roomid:currentroom._id))?(<div className="input-ctnr">
+          <input placeholder='enter your message here to send...' className='txt-box' type="text-box" value={typedText} onChange={(e)=>{
+            setTypedText(e.target.value);
+         }} />
+         <SendIcon sx={{ fontSize: 38}} className='snd-btn' onClick={()=>{
+             handleSendMessage(currentroom,socket,typedText);
+             setTypedText("");
+         }} />          
+       </div>):<div className="join-ctnr"><button className='join-btn' onClick={()=>{joinRoom(currentroom._id,"admin",currentroom.roomName)}}>JOIN</button></div>
+       }
     </div>
   );
 }

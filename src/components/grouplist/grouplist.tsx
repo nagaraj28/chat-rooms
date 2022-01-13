@@ -12,18 +12,20 @@ import GroupingComponent from './groupingComponent';
 function GroupList() {
     const emptyRooms:any[] = [];
     const [rooms,setRooms] = useState(emptyRooms);
-    const {changeRoom}:any = useContext(Context);
     const {socket}:any = useContext(SocketContext);
+    const {updateNotificationsArray}:any = useContext(Context);
     useEffect(()=>{
         if(socket.connected || socket.disconnected){
             axios.get("http://localhost:5000/chat/rooms/admin").then((res:any)=>{
                 setRooms(res.data.data);
+                updateNotificationsArray(res.data.data);
 });
             // console.log("axios");
             socket.on("notify",(msg:any)=>{
                 // console.log(msg);
                 axios.get("http://localhost:5000/chat/rooms/admin").then((res:any)=>{
                     setRooms(res.data.data);
+                    updateNotificationsArray(res.data.data);
     });
             });
         }
