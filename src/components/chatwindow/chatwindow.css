@@ -1,7 +1,7 @@
 .room-ctnr{
     width: 100%;
-    padding:45px 20px 20px;
-    background-color: #1D4ED8;
+    padding:28px;
+    background-color: rgb(17, 82, 147);
     color: #ffff;
 }
 .room-title{

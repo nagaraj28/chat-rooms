@@ -1,0 +1,12 @@
+.nav-header{
+    display: flex !important;
+    justify-content: space-between;
+}
+.nav-icons{
+    display: flex;
+    /* padding-left: 30px;
+    padding-right: 30px; */
+}
+.add-icon{
+    margin-left: 25px !important;
+}

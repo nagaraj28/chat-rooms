@@ -2,3 +2,41 @@
     overflow-y: scroll;
     height: 100vh;
 }
+.chatheader{
+    display: grid;
+    grid-template-columns: 15% 85%;
+    padding:20px 10px;
+    border-bottom: 1px solid #E0F2FE;
+}
+.chatheader:hover{
+    cursor: pointer;
+}
+.grp-header,.msg-body-ctnr{
+    display: flex;
+    justify-content:space-between;
+    padding:5px;
+}
+.grp-name{
+    font-size: 20px;
+}
+.grp-tym{
+    font-size: 13px;
+}
+
+.grp-avatar{
+    align-items: center;
+}
+.msg-body{
+    font-size: 15px;
+}
+.bold{
+    font-weight: bold;
+}
+.alert{
+    font-size: 15px;
+    font-weight:lighter;
+    padding: 2px 4px;
+    background-color: #DC2626;
+    border-radius: 50%;
+    color: #fff;
+}

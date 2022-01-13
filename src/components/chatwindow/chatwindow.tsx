@@ -13,9 +13,13 @@ function ChatWindow() {
     <div >
      <div className='room-ctnr'>
      <p className='room-title'>
-       {
+       
+     <p> <span className='img-ctnr'>
+                <img width="40" height="40" src={`https://avatars.dicebear.com/api/bottts/${currentRoom&&currentRoom.roomid?currentRoom.roomid:"none"}.svg`} alt="profile-picture" />
+            </span>  {
         currentRoom&&currentRoom.roomName
-      }
+      }</p>  
+      
       </p>
      </div>
        {

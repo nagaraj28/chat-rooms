@@ -5,6 +5,7 @@ import axios from 'axios';
 import { Context } from '../../context/context';
 import { SocketContext } from '../../context/scoketContext';
 import { convertToReadableTime } from '../chatwindow/chatWindowUtil';
+import "../chatMessages/chatMessages.css";
 
 
 function GroupList() {
@@ -37,15 +38,21 @@ function GroupList() {
              return   <div key={notifications.roomid} className='chatheader' onClick={()=>{
                 changeRoom(notifications);
     }}>
-                        <hr/>
-        <h4>
-            {notifications.roomName}
-            <span><small>{convertToReadableTime(notifications.updatedAt)}</small></span>
-        </h4>
-        <p>
+         <div className='grp-avatar'>
+                <img width="40" height="40" src={`https://avatars.dicebear.com/api/bottts/${notifications.roomid}.svg`} alt="profile-picture" />
+            </div>
+       <div >
+        <div className='grp-header'>
+           <h3 className="grp-name">{notifications.roomName}</h3>
+            <span className="grp-tym">{convertToReadableTime(notifications.updatedAt)}</span>
+        </div>
+        <div className='msg-body-ctnr'>
+        <p className={notifications.messagecount>0?"bold":""}>
             {notifications.lastmessage}
-                <small><b>{notifications.messagecount}</b></small>
         </p>
+        {notifications.messagecount>0&&<p className='alert'>{notifications.messagecount}</p>}
+        </div>
+           </div>
         </div>
             })  
         }

@@ -1,6 +1,6 @@
 .chatmsgctnr{
     overflow: scroll;
-    height: 82vh;
+    height: 76vh;
     margin-right: 65px;
     overflow-x: hidden;
 }
@@ -21,10 +21,10 @@
     border: 2px solid #DBEAFE;
 }
 .snd-btn{
-    width: 100px;
+    /* width: 100px;
     background-color: #ffff;
     text-align: center;
-    font-weight: bold;
+    font-weight: bold; */
 }
 .txt-box{
     font-size: 12px;
@@ -32,7 +32,7 @@
 }
 .snd-btn:hover{
     cursor: pointer;
-    background-color: #1D4ED8;
+    background-color: rgb(17, 82, 147);
     color: #fff;
 }
 
