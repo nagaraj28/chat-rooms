@@ -4,9 +4,10 @@ import { convertToReadableTime } from "../chatwindow/chatWindowUtil";
 import { GroupList } from "./groupListInterface";
 
 const GroupingComponent: React.FC<GroupList> = ({room})=>{
-    const  {changeRoom,closeAllModals}:any = useContext(Context);
+    const  {changeRoom,closeAllModals,changeChatWindow}:any = useContext(Context);
     return   <div key={room.roomid} className='chatheader' onClick={()=>{
         closeAllModals();
+        changeChatWindow(true)
         room.roomid?changeRoom(room):changeRoom(Object.assign({},room,{roomid:room._id}))
 }}>
  <div className='grp-avatar'>

@@ -40,3 +40,9 @@
     border-radius: 50%;
     color: #fff;
 }
+
+@media screen and (max-width:830px) {
+    .resp-hide{
+        display:none;
+    }
+}

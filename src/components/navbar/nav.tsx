@@ -33,11 +33,14 @@ function NavBar() {
    <>
    <div className='room-ctnr'>
      <div className="room-title nav-header">
-     <p > <span className='img-ctnr'>
+       <div className="nav-welcome-ctnr">
+       <div className='img-ctnr nav-ctnr'>
                 <img width="40" height="40" src={`https://avatars.dicebear.com/api/bottts/admin.svg`} alt="profile-picture" />
-            </span>  Hi, user!</p>  
+            </div>   
+            <div className="welcome-txt"> Hi, user! </div>  
+         </div>   
     <div className="nav-icons">
-    <FindInPageTwoToneIcon sx={{ fontSize: 28}} onClick={()=>changeIsModalOpenForFindingRooms()} />
+    <FindInPageTwoToneIcon className="find-icon" sx={{ fontSize: 28}} onClick={()=>changeIsModalOpenForFindingRooms()} />
     <AddCircleTwoToneIcon className="add-icon" sx={{ fontSize: 28}} onClick={()=>changeIsModalOpenForCreateRoom()}/>
     </div>
      </div>

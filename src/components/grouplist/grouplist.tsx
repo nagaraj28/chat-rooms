@@ -13,7 +13,7 @@ function GroupList() {
     const emptyRooms:any[] = [];
     const [rooms,setRooms] = useState(emptyRooms);
     const {socket}:any = useContext(SocketContext);
-    const {updateNotificationsArray}:any = useContext(Context);
+    const {updateNotificationsArray,isChatWindowOpen}:any = useContext(Context);
     useEffect(()=>{
         if(socket.connected || socket.disconnected){
             axios.get("http://localhost:5000/chat/rooms/admin").then((res:any)=>{
@@ -33,9 +33,9 @@ function GroupList() {
     // console.log(rooms);
     // console.log("group-list");
   return (
-   <div>
+   <div className={isChatWindowOpen?"resp-hide":""}>
        <NavBar/>
-       <div className="group-ctnr">
+       <div className="group-ctnr" >
         {
             rooms?.length>0?rooms.map(({notifications}:any)=>{
              return  <GroupingComponent key={notifications.roomid} room={notifications} />

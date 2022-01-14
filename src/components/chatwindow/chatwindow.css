@@ -3,8 +3,45 @@
     padding:28px;
     background-color: rgb(17, 82, 147);
     color: #ffff;
+    text-align: center;
+}
+.chat-nav-main-ctnr{
+    display: grid;
+    grid-template-columns: auto;
+}
+.chat-nav-ctnr{
+    display: flex;
+    justify-content: center;
+    margin-right: 150px;
+}
+.room-logo-ctnr{
+    margin-top: 0 !important;
+    margin-right: 30px;
 }
 .room-title{
     font-size: 25px;
     font-style: italic;
+}
+.back-btn{
+    cursor: pointer;
+    font-size: 35px !important;
+    margin-right: 10px;
+}
+.room-name-title{
+    font-size: 25px;
+    font-weight: bold;
+}
+.back-btn{
+    display: none !important;
+}
+@media screen and (max-width:830px) {
+    .res-window-hide{
+        display: none;
+    }
+    .back-btn{
+        display: block !important;
+    }
+    .chat-nav-main-ctnr{
+        grid-template-columns: 5% 95%;
+    }
 }

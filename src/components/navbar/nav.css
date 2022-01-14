@@ -1,3 +1,10 @@
+.nav-welcome-ctnr{
+    display: flex;
+}
+.nav-ctnr{
+    margin-top: 0;
+    display: flex;
+}
 .nav-header{
     display: flex !important;
     justify-content: space-between;
@@ -46,4 +53,12 @@
 .err{
     color: red;
     font-size: 15px;
+}
+.welcome-txt{
+    margin-left: 20px;
+    margin-top: 8px;
+    font-size: 25px;
+}
+.find-icon,.add-icon{
+    cursor: pointer;
 }
