@@ -18,7 +18,7 @@ const GroupingComponent: React.FC<GroupList> = ({room})=>{
 <div >
 <div className='grp-header'>
    <h3 className="grp-name">{room.roomName}</h3>
-    {room.showTime&&<span className="grp-tym">{convertToReadableTime(room.updatedAt)}</span>}
+    {room.updatedAt&&<span className="grp-tym">{convertToReadableTime(room.updatedAt)}</span>}
 </div>
 <div className='msg-body-ctnr'>
 <p className={room.messagecount>0?"bold":""}>

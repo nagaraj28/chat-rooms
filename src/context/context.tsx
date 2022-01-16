@@ -1,6 +1,6 @@
 import React, {useState} from "react";
 import { createContext } from "react";
-export const URL = "http://localhost:5000/";
+export const URL = "https://backendforapps.herokuapp.com/";
 
 export const Context = createContext({});
 const ContextProvider: React.FC<{}> = ({children})=>{
@@ -12,17 +12,8 @@ const ContextProvider: React.FC<{}> = ({children})=>{
     const [roomData,setRoomData] = useState();
     const [userDetails,setUserDetails] = useState();
 
-//    const navigate = useNavigate();
-//     useEffect(()=>{
-//         const token = localStorage.getItem("x-auth-token");
-//         if(!token){
-//             setGlobalLoading(false);
-//         }
-
-//     },[]);
 
     function changeRoom(newRoom:any):void{
-        // console.log("hey",newRoom);
         setCurrentRoom(newRoom);
     }
     function changeIsModalOpenForCreateRoom():void{

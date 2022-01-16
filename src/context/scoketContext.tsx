@@ -1,6 +1,7 @@
 import React, { useState,useEffect } from "react";
 import { createContext } from "react";
 import io from 'socket.io-client';
+import { URL } from "./context";
 
 export const SocketContext = createContext({});
 const SocketContextProvider: React.FC<{}> = ({children})=>{
@@ -8,7 +9,7 @@ const SocketContextProvider: React.FC<{}> = ({children})=>{
     const initialSocket:any={}; 
     const [socket,setSocket] = useState(initialSocket);
     useEffect(():any => {
-        const newSocket = io(`http://localhost:5000/`);
+        const newSocket = io(`${URL}`);
         setSocket(newSocket);
         if(newSocket.connected){
             console.log("socket connected",socket.id);

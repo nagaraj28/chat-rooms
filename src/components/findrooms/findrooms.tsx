@@ -22,7 +22,7 @@ const FindRooms = ()=>{
         {
             allRooms?allRooms.map((room:any)=>{
                 // console.log(room);
-               return <GroupingComponent key={room._id} room={Object.assign({},room,{roomid:room._id,showTime:false})} />
+               return <GroupingComponent key={room._id} room={Object.assign({},room,{roomid:room._id})} />
             }):"rooms not found"
         }
     </div>
