@@ -11,12 +11,11 @@
 }
 .nav-icons{
     display: flex;
+    column-gap: 15px;
     /* padding-left: 30px;
     padding-right: 30px; */
 }
-.add-icon{
-    margin-left: 25px !important;
-}
+
 .modal-input-box-ctnr,.modal-btn-ctnr{
     text-align: center;
     padding-top: 30px;
@@ -61,4 +60,17 @@
 }
 .find-icon,.add-icon{
     cursor: pointer;
+}
+@media screen and  (min-width: 832px) and (max-width: 985px) {
+     .welcome-txt{
+         margin-left: 2px;
+         font-size: 15px;
+     }
+}  
+
+@media  screen and (max-width:360px) {
+    .welcome-txt{
+        margin-left: 0;
+        font-size: 20px;
+    }
 }

@@ -1,17 +1,25 @@
-import React, { useState,useEffect } from "react";
+import React, {useState} from "react";
 import { createContext } from "react";
-import io from 'socket.io-client';
+export const URL = "http://localhost:5000/";
 
 export const Context = createContext({});
 const ContextProvider: React.FC<{}> = ({children})=>{
-    // console.log("context started");
     const [currentRoom,setCurrentRoom] = useState(null);
     const [isModalOpenForCreateRoom,setIsModalOpenForCreateRoom] = useState(false);
     const [isModalOpenForFindingRooms,setIsModalOpenForFindingRooms] = useState(false);
     const [isChatWindowOpen,setIsChatWindowOpen] = useState(false);
-    const emptyArr:any[]= [];
-    const [globalNotificationsArray,setGlobalNotifications] = useState(emptyArr);
-    
+    const [isGroupDetailsOpened,setIsGroupDetailsOpened] = useState(false);
+    const [roomData,setRoomData] = useState();
+    const [userDetails,setUserDetails] = useState();
+
+//    const navigate = useNavigate();
+//     useEffect(()=>{
+//         const token = localStorage.getItem("x-auth-token");
+//         if(!token){
+//             setGlobalLoading(false);
+//         }
+
+//     },[]);
 
     function changeRoom(newRoom:any):void{
         // console.log("hey",newRoom);
@@ -26,18 +34,26 @@ const ContextProvider: React.FC<{}> = ({children})=>{
     function closeAllModals():void{
         setIsModalOpenForCreateRoom(false);
         setIsModalOpenForFindingRooms(false);
+        setIsGroupDetailsOpened(false);
     }
-    function updateNotificationsArray(notificationsArr:any[]):void{
-        setGlobalNotifications(notificationsArr);
+    function updateRoomData(roomDetails:any):void{
+        setRoomData(roomDetails);
     }
     function changeChatWindow(value:boolean):void{
         setIsChatWindowOpen(value);
     }
+    function changeIsGroupDetailsOpened(value:boolean):void{
+        setIsGroupDetailsOpened(value);
+    }
+    
+    function updateUserDetails(value:any):void{
+        setUserDetails(value);
+    }
 
     return <Context.Provider value={{currentRoom,changeRoom,isModalOpenForCreateRoom,isModalOpenForFindingRooms,changeIsModalOpenForCreateRoom,changeIsModalOpenForFindingRooms,closeAllModals
-    ,updateNotificationsArray,globalNotificationsArray,isChatWindowOpen,changeChatWindow}}>
+    ,updateRoomData,roomData,isChatWindowOpen,changeChatWindow,isGroupDetailsOpened,changeIsGroupDetailsOpened,userDetails,updateUserDetails}}>
         {children}
     </Context.Provider>
-} 
+}
 
 export default ContextProvider;

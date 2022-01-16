@@ -3,13 +3,15 @@ import { useEffect } from "react";
 import "./findrooms.css";
 import axios from "axios";
 import GroupingComponent from "../grouplist/groupingComponent";
+import { URL } from "../../context/context";
+
 const FindRooms = ()=>{
     const emptyArr:any[] = [];
     const [allRooms,setAllRooms] = useState(emptyArr);
     const [error,setError] = useState("");
 
     useEffect(()=>{
-         axios.get("http://localhost:5000/chat").then((res:any)=>{
+         axios.get(`${URL}chat`).then((res:any)=>{
              if(res.data.status==="success")
              setAllRooms(res.data.data);
              else
@@ -19,7 +21,8 @@ const FindRooms = ()=>{
     return <div className="find-rooms-ctnr" >
         {
             allRooms?allRooms.map((room:any)=>{
-               return <GroupingComponent key={room._id} room={room} />
+                // console.log(room);
+               return <GroupingComponent key={room._id} room={Object.assign({},room,{roomid:room._id,showTime:false})} />
             }):"rooms not found"
         }
     </div>

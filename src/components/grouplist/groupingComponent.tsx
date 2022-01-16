@@ -5,18 +5,20 @@ import { GroupList } from "./groupListInterface";
 
 const GroupingComponent: React.FC<GroupList> = ({room})=>{
     const  {changeRoom,closeAllModals,changeChatWindow}:any = useContext(Context);
+    // console.log(room);
     return   <div key={room.roomid} className='chatheader' onClick={()=>{
         closeAllModals();
         changeChatWindow(true)
-        room.roomid?changeRoom(room):changeRoom(Object.assign({},room,{roomid:room._id}))
+        // room.roomid?changeRoom(room):changeRoom(Object.assign({},room,{roomid:room._id}))
+        changeRoom(room);
 }}>
  <div className='grp-avatar'>
-        <img width="40" height="40" src={`https://avatars.dicebear.com/api/bottts/${room.roomid?room.roomid:room._id}.svg`} alt="profile-picture" />
+        <img width="40" height="40" src={`https://avatars.dicebear.com/api/bottts/${room.roomid}.svg`} alt="profile-picture" />
     </div>
 <div >
 <div className='grp-header'>
    <h3 className="grp-name">{room.roomName}</h3>
-    {room.roomid&&<span className="grp-tym">{convertToReadableTime(room.updatedAt)}</span>}
+    {room.showTime&&<span className="grp-tym">{convertToReadableTime(room.updatedAt)}</span>}
 </div>
 <div className='msg-body-ctnr'>
 <p className={room.messagecount>0?"bold":""}>

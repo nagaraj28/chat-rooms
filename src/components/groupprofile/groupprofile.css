@@ -1,0 +1,39 @@
+.scroll-container{
+    overflow-y: scroll;
+    height: 80vh;
+}
+.scroll-item-ctnr{
+    padding: 20px;
+    display: flex; 
+    align-items: center;
+    border-bottom: 1px solid #DBEAFE;
+    justify-content: space-between;
+}
+.scroll-item-user{
+    display: flex;
+    align-items: center;
+    column-gap: 10px;
+}
+
+.block-btn,.remove-btn{
+    padding:5px 10px;
+    border-radius: 20px;
+    font-weight: bold;
+    font-size: 15px;
+    border:none;
+    cursor: pointer;
+}
+.block-btn{
+    background-color: rgb(17, 82, 147);
+    color: white;
+}
+.remove-btn{
+    color: rgb(17, 82, 147);
+}
+.block-btn:hover,.remove-btn:hover{
+    opacity: 0.7;
+}
+.scroll-btns-ctnr{
+    display: flex;
+    column-gap: 10px;
+}

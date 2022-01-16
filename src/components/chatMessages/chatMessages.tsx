@@ -6,6 +6,7 @@ import { performClearRoomNotifications } from '../chatwindow/chatWindowUtil';
 import "./chatMessages.css";
 import SendIcon from '@mui/icons-material/Send';
 import { Context } from '../../context/context';
+import { URL } from '../../context/context';
 
 const ChatMessages: React.FC<ChatRoomInterface> = ({currentroom,socket}):JSX.Element=>{
 
@@ -13,13 +14,14 @@ const ChatMessages: React.FC<ChatRoomInterface> = ({currentroom,socket}):JSX.Ele
     const [currentMessagesStore,setCurrentMessagesStore] = useState(emptyArr);
     const [typedText,setTypedText] = useState("");
     const [dbMessages,setDbMessages] = useState(emptyArr);
-    const {globalNotificationsArray}:any = useContext(Context);
+    const {roomData,updateRoomData,userDetails}:any = useContext(Context);
     // console.log(globalNotificationsArray);
+    // console.log(roomData);
     useEffect(()=>{
         if(currentroom.messagecount>0){
-            performClearRoomNotifications(currentroom.roomid,"admin");
+            performClearRoomNotifications(currentroom.roomid,userDetails.username);
         }
-    axios.get(`http://localhost:5000/messages/${currentroom.roomid}`).then((res:any)=>{
+    axios.get(`${URL}messages/${currentroom.roomid}`).then((res:any)=>{
         setDbMessages(res.data.messages);
     });
     setCurrentMessagesStore(emptyArr);    
@@ -30,7 +32,7 @@ const ChatMessages: React.FC<ChatRoomInterface> = ({currentroom,socket}):JSX.Ele
             perFormMsgMerge(msg);
         });
     return ()=>{
-        performClearRoomNotifications(currentroom.roomid,"admin");
+        performClearRoomNotifications(currentroom.roomid,userDetails.username);
         socket.off(currentroom.roomid);
         setCurrentMessagesStore(emptyArr);    
     }
@@ -51,8 +53,16 @@ const ChatMessages: React.FC<ChatRoomInterface> = ({currentroom,socket}):JSX.Ele
         const hours = created_date.getHours()===0?"12":created_date.getHours()>12?created_date.getHours()-12:created_date.getHours();
         return hours+":"+created_date.getMinutes()+" "+amORpm;
     }
-    const joinRoom = (roomid:string,username:string,roomName:string):void=>{
-        axios.post("http://localhost:5000/chat/rooms/adduser",{roomid,username,roomName}).then(res=>console.log(res));
+    const joinRoom = async(roomid:string,username:string,roomName:string)=>{
+        axios.post(`${URL}chat/rooms/adduser`,{roomid,username,roomName}).then((res:any)=>{
+            if(res.data.status==="success"){    
+                updateRoomData(res.data.data);
+            }else{
+                console.log("something went wrong joining the room!");
+            }
+        }).catch((err:any)=>{
+            console.log("error joining room!");
+        });
     }
     
     return (
@@ -63,7 +73,7 @@ const ChatMessages: React.FC<ChatRoomInterface> = ({currentroom,socket}):JSX.Ele
         {
            dbMessages&&dbMessages.map((eachMessage:any,index:number)=><li className='msg-head-ctnr'   key={`${eachMessage.createdAt}${index}`}>
                   <div className='img-ctnr'>
-                <img width="40" height="40" src={`https://avatars.dicebear.com/api/bottts/admin.svg`} alt="profile-picture" />
+                <img width="40" height="40" src={`https://avatars.dicebear.com/api/bottts/${eachMessage.username}.svg`} alt="profile-picture" />
             </div>
             <div className='msg-ctnr'>
             <p><strong>{eachMessage.username}</strong></p>  
@@ -77,7 +87,7 @@ const ChatMessages: React.FC<ChatRoomInterface> = ({currentroom,socket}):JSX.Ele
         {
              currentMessagesStore&&currentMessagesStore.map((eachMessage:any,index:number)=><li className='msg-head-ctnr'   key={`${eachMessage.createdAt}${index}`}>
              <div className='img-ctnr'>
-           <img width="40" height="40" src={`https://avatars.dicebear.com/api/bottts/admin.svg`} alt="profile-picture" />
+           <img width="40" height="40" src={`https://avatars.dicebear.com/api/bottts/${eachMessage.username}.svg`} alt="profile-picture" />
        </div>
        <div className='msg-ctnr'>
        <p><strong>{eachMessage.username}</strong></p>  
@@ -101,15 +111,15 @@ const ChatMessages: React.FC<ChatRoomInterface> = ({currentroom,socket}):JSX.Ele
        </div>
      }
       {
-          globalNotificationsArray.some((room:any)=>room.notifications.roomid===(currentroom.roomid?currentroom.roomid:currentroom._id))?(<div className="input-ctnr">
+          roomData&&roomData.blockedAccounts?.includes(userDetails.username)?(<div className="join-ctnr"><div >you don't have permissions to send messages</div></div>):roomData&&roomData.users?.includes(userDetails.username)?(<div className="input-ctnr">
           <input placeholder='enter your message here to send...' className='txt-box' type="text-box" value={typedText} onChange={(e)=>{
             setTypedText(e.target.value);
          }} />
          <SendIcon sx={{ fontSize: 38}} className='snd-btn' onClick={()=>{
-             handleSendMessage(currentroom,socket,typedText);
+             handleSendMessage(userDetails.username,currentroom,socket,typedText);
              setTypedText("");
          }} />          
-       </div>):<div className="join-ctnr"><button className='join-btn' onClick={()=>{joinRoom(currentroom._id,"admin",currentroom.roomName)}}>JOIN</button></div>
+       </div>):<div className="join-ctnr"><button className='join-btn' onClick={()=>{joinRoom(currentroom._id,userDetails.username,currentroom.roomName)}}>JOIN</button></div>
        }
     </div>
   );

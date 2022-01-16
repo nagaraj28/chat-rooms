@@ -1,13 +1,15 @@
 import axios from "axios";
-export  const handleSendMessage = async(currentRoom:any,socket:any,typedText:string)=>{
-    const insertMessagesIntoDb:any = await axios.post("http://localhost:5000/messages/addmessages",{
-        username:"admin",
+import { URL } from "../../context/context";
+
+    export  const handleSendMessage = async(username:string,currentRoom:any,socket:any,typedText:string)=>{
+    const insertMessagesIntoDb:any = await axios.post(`${URL}messages/addmessages`,{
+        username,
         text:typedText, 
         imageSrc:"",
         roomid:currentRoom.roomid,
     });
-    const notifyRooms:any = await axios.post("http://localhost:5000/chat/notify",{
-        username:"admin",
+    const notifyRooms:any = await axios.post(`${URL}chat/notify`,{
+        username,
         text:typedText, 
         imageSrc:"",
         roomid:currentRoom.roomid,
@@ -18,7 +20,7 @@ export  const handleSendMessage = async(currentRoom:any,socket:any,typedText:str
     if(insertMessagesIntoDb.data.status==="success"&&notifyRooms.data.status==="success"){
         // console.log("emitting new msg")
         socket.emit("incoming-chat",{
-            username:"admin",
+            username,
             text:typedText,
             imageSrc:"",
             roomid:currentRoom.roomid,
@@ -29,7 +31,7 @@ export  const handleSendMessage = async(currentRoom:any,socket:any,typedText:str
 
 export const performClearRoomNotifications = async(roomid:string,username:string)=>{
     
-    const deleteOperation = await axios.delete("http://localhost:5000/chat/clearroomnotification",{data:{roomid:roomid,username:username}});
+    const deleteOperation = await axios.delete(`${URL}chat/clearroomnotification`,{data:{roomid:roomid,username:username}});
     // console.log(deleteOperation);
 }
 
