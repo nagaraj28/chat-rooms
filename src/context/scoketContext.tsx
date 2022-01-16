@@ -9,7 +9,11 @@ const SocketContextProvider: React.FC<{}> = ({children})=>{
     const initialSocket:any={}; 
     const [socket,setSocket] = useState(initialSocket);
     useEffect(():any => {
-        const newSocket = io(`${URL}`);
+        const newSocket = io(`${URL}`,{
+  withCredentials: true,
+  extraHeaders: {
+    "my-custom-header": "abcd"
+  });
         setSocket(newSocket);
         if(newSocket.connected){
             console.log("socket connected",socket.id);
