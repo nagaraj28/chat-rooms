@@ -13,7 +13,7 @@ import  FindRooms  from "../findrooms/findrooms";
 import { URL } from "../../context/context";
 import LogoutRoundedIcon from '@mui/icons-material/LogoutRounded';
 import Tooltip from '@mui/material/Tooltip';
-import { Navigate, useNavigate } from "react-router";
+import {useNavigate } from "react-router";
 
 
 function NavBar() {

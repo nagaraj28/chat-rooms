@@ -1,7 +1,8 @@
 import axios from "axios";
 import { useContext, useEffect, useState } from "react";
-import { Navigate, Outlet,RouteProps } from "react-router";
+import { Navigate, Outlet } from "react-router";
 import { Context } from "../../context/context";
+import CircularProgress from '@mui/material/CircularProgress';
 import { URL } from "../../context/context";
 
 
@@ -30,7 +31,7 @@ import { URL } from "../../context/context";
       }
     },[]);
     return (
-      (!loading)?(userDetails&&userDetails.username?<Outlet/>:<Navigate to="/login" />):<>loading</>
+      (!loading)?(userDetails&&userDetails.username?<Outlet/>:<Navigate to="/login" />):<div  style={{marginTop:"100px",display:"flex",justifyContent:"center",alignContent:"center"}}><CircularProgress/></div>
     );
 }
 

@@ -90,12 +90,12 @@ const ChatMessages: React.FC<ChatRoomInterface> = ({currentroom,socket}):JSX.Ele
         <div className="chatmsgctnr">
         <ul>
         {
-           dbMessages&&dbMessages.map((eachMessage:any,index:number)=><li className='msg-head-ctnr'   key={`${eachMessage.createdAt}${index}`}>
+           dbMessages&&dbMessages.map((eachMessage:any,index:number)=><li className={eachMessage.username!==userDetails.username?"msg-head-ctnr":"msg-head-ctnr your-msg-ctnr"}   key={`${eachMessage.createdAt}${index}`}>
                   <div className='img-ctnr'>
                 <img width="40" height="40" src={`https://avatars.dicebear.com/api/bottts/${eachMessage.username}.svg`} alt="profile-picture" />
             </div>
             <div className='msg-ctnr'>
-            <p><strong>{eachMessage.username}</strong></p>  
+            <p><strong>{eachMessage.username!==userDetails.username?eachMessage.username:"you"}</strong></p>  
             <p><small>{eachMessage.text}</small></p>
             <p className='txt-tym'>
            {getTime(eachMessage.createdAt)}
@@ -104,7 +104,7 @@ const ChatMessages: React.FC<ChatRoomInterface> = ({currentroom,socket}):JSX.Ele
             </li>)
         }
         {
-             currentMessagesStore&&currentMessagesStore.map((eachMessage:any,index:number)=><li className='msg-head-ctnr'   key={`${eachMessage.createdAt}${index}`}>
+             currentMessagesStore&&currentMessagesStore.map((eachMessage:any,index:number)=><li className={eachMessage.username!==userDetails.username?"msg-head-ctnr":"msg-head-ctnr your-msg-ctnr"}   key={`${eachMessage.createdAt}${index}`}>
              <div className='img-ctnr'>
            <img width="40" height="40" src={`https://avatars.dicebear.com/api/bottts/${eachMessage.username}.svg`} alt="profile-picture" />
        </div>
@@ -130,12 +130,18 @@ const ChatMessages: React.FC<ChatRoomInterface> = ({currentroom,socket}):JSX.Ele
      }
       {
           roomData&&roomData.blockedAccounts?.includes(userDetails.username)?(<div className="join-ctnr"><div >you don't have permissions to send messages</div></div>):roomData&&roomData.users?.includes(userDetails.username)?(<div className="input-ctnr">
-          <input placeholder='enter your message here to send...' className='txt-box' type="text-box" value={typedText} onChange={(e)=>{
+          <input placeholder='enter your message here to send...' className='txt-box' type="text-box" value={typedText} onKeyPress={(e)=>{
+              if(e.key==="Enter" && typedText.length>0){
+                 handleSendMessage(userDetails.username,currentroom,socket,typedText);
+                    setTypedText("");
+                }}
+              }
+           onChange={(e)=>{
             setTypedText(e.target.value);
          }} />
-         <SendIcon sx={{ fontSize: 38}} className='snd-btn' onClick={()=>{
-             handleSendMessage(userDetails.username,currentroom,socket,typedText);
-             setTypedText("");
+         <SendIcon sx={{ fontSize: 38}}  className='snd-btn' onClick={()=>{
+            if(typedText.length>0){ handleSendMessage(userDetails.username,currentroom,socket,typedText);
+             setTypedText("");}
          }} />          
        </div>):<div className="join-ctnr"><button className='join-btn' onClick={()=>{joinRoom(currentroom._id,userDetails.username,currentroom.roomName)}}>JOIN</button></div>
        }

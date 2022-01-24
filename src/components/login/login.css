@@ -1,0 +1,7 @@
+.updatebtn{
+    background-color: rgb(17, 82, 147) !important;
+    cursor: pointer;
+}
+.updatebtn:disabled{
+    opacity: 0.4;
+}

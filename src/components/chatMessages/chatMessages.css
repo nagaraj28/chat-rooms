@@ -4,6 +4,7 @@
     margin-right: 65px;
     overflow-x: hidden;
 }
+
 .input-ctnr{
     width: 100%;
     display: flex;
@@ -40,13 +41,18 @@
     background-color: #EFF6FF;
 }
 .msg-head-ctnr{
-    display: grid;
-    grid-template-columns: 2% 98%;
+
+    display: flex;
+    /* display: grid;
+    grid-template-columns: 2% 98%; */
+}
+.your-msg-ctnr{
+    flex-direction: row-reverse;
 }
 .msg-ctnr{
     background-color: #fff;
     width: 70%;
-    margin: 40px;
+    margin: 40px 20px;
     padding:15px;
     border-radius: 10px;
 }
@@ -67,7 +73,7 @@ hr{
 .join-ctnr{
     width: 100%;
     display: flex;
-    padding: 2  0px;
+    padding: 20px;
     justify-content: center;
     background-color: #E7E5E4;}
 
