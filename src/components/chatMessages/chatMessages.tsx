@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState,useRef} from 'react';
 import { handleSendMessage } from '../chatwindow/chatWindowUtil';
 import { ChatRoomInterface } from './chatMessageInterface';
 import axios from 'axios';
@@ -15,11 +15,29 @@ const ChatMessages: React.FC<ChatRoomInterface> = ({currentroom,socket}):JSX.Ele
     const [typedText,setTypedText] = useState("");
     const [dbMessages,setDbMessages] = useState(emptyArr);
     const {roomData,updateRoomData,userDetails}:any = useContext(Context);
+    const messagesEndRef:any = useRef(null);
+
+  const scrollToBottom = () => {
+    setTimeout(()=>{
+        messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+      },500);
+     
+      setTimeout(()=>{
+        messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+      },1000);
+      setTimeout(()=>{
+        messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+      },2000);
+      setTimeout(()=>{
+        messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+      },5000);
+  }
     // console.log(globalNotificationsArray);
     // console.log(roomData);
     useEffect(()=>{
         if(currentroom.messagecount>0){
             performClearRoomNotifications(currentroom.roomid,userDetails.username);
+            scrollToBottom();
         }
     axios.get(`${URL}messages/${currentroom.roomid}`).then((res:any)=>{
         setDbMessages(res.data.messages);
@@ -27,10 +45,12 @@ const ChatMessages: React.FC<ChatRoomInterface> = ({currentroom,socket}):JSX.Ele
     setCurrentMessagesStore(emptyArr);    
     const perFormMsgMerge  = (msg:any)=>{
         setCurrentMessagesStore((prevState:any[])=>[...prevState,msg]);
+        scrollToBottom();
         }
         socket.on(currentroom.roomid,(msg:any)=>{
             perFormMsgMerge(msg);
         });
+        scrollToBottom();
     return ()=>{
         performClearRoomNotifications(currentroom.roomid,userDetails.username);
         socket.off(currentroom.roomid);
@@ -64,7 +84,6 @@ const ChatMessages: React.FC<ChatRoomInterface> = ({currentroom,socket}):JSX.Ele
             console.log("error joining room!");
         });
     }
-    
     return (
     <div className="chat-window">
         {
@@ -105,9 +124,8 @@ const ChatMessages: React.FC<ChatRoomInterface> = ({currentroom,socket}):JSX.Ele
         //        </small> 
         //     </li>)
         }
-        
        </ul>
-       <div id='end'></div>
+       <div ref={messagesEndRef} />
        </div>
      }
       {

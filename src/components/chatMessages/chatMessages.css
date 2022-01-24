@@ -1,6 +1,6 @@
 .chatmsgctnr{
     overflow: scroll;
-    height: 76vh;
+    height: 72vh;
     margin-right: 65px;
     overflow-x: hidden;
 }
@@ -67,7 +67,7 @@ hr{
 .join-ctnr{
     width: 100%;
     display: flex;
-    padding: 20px;
+    padding: 2  0px;
     justify-content: center;
     background-color: #E7E5E4;}
 
@@ -87,5 +87,36 @@ hr{
 @media screen and (max-width:830px) {
     .chatmsgctnr{
         margin-right: 0;
+    }
+}
+
+/* @media screen and (max-width:470px) {
+    .chatmsgctnr{
+        height: 70vh;
+    }
+    .input-ctnr{
+        padding:5px;
+    }
+} */
+@media screen and (max-height:535px) {
+   
+    .input-ctnr{
+        padding:5px;
+    }
+}
+@media screen and (max-height:420px) {
+    .chatmsgctnr{
+        height: 68vh;
+    }
+    .input-ctnr{
+        padding:5px;
+    }
+}
+@media screen and (max-height:380px) {
+    .chatmsgctnr{
+        height: 65vh;
+    }
+    .input-ctnr{
+        padding:5px;
     }
 }
