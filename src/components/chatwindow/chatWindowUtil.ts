@@ -16,7 +16,6 @@ import { URL } from "../../context/context";
     });
     
     var created_date = new Date();
-    const createdAt:string = convertToReadableTime(created_date);
     if(insertMessagesIntoDb.data.status==="success"&&notifyRooms.data.status==="success"){
         // console.log("emitting new msg")
         socket.emit("incoming-chat",{
@@ -24,7 +23,7 @@ import { URL } from "../../context/context";
             text:typedText,
             imageSrc:"",
             roomid:currentRoom.roomid,
-            createdAt
+            createdAt:created_date
           });
     }
 }
@@ -41,10 +40,8 @@ export const convertToReadableTime = (date:any):string=>{
     const dateValue  = String(created_date).slice(4,15);
     if(todayDateValue!==dateValue)
     return dateValue;
-    
-
     const amORpm = created_date.getHours()>=12?"PM":"AM";
     const hours = String(created_date.getHours()===0?"12":created_date.getHours()>12?created_date.getHours()-12:created_date.getHours());
     const createdAt = "Today | "+((hours.length<2?"0"+hours:hours)+":"+(String(created_date.getMinutes()).length<2?"0"+created_date.getMinutes():created_date.getMinutes())+" "+amORpm);    
-return createdAt;
+    return createdAt;
 }

@@ -69,9 +69,14 @@ const ChatMessages: React.FC<ChatRoomInterface> = ({currentroom,socket}):JSX.Ele
     // });
     const getTime = (date:any):string=>{
         var created_date = new Date(date);
+        const todayDateValue = String(new Date()).slice(4,15);
+        let dateValue  = String(created_date).slice(4,15);
+        if(todayDateValue===dateValue)
+         dateValue="Today";
         const amORpm = created_date.getHours()>=12?"PM":"AM";
-        const hours = created_date.getHours()===0?"12":created_date.getHours()>12?created_date.getHours()-12:created_date.getHours();
-        return hours+":"+created_date.getMinutes()+" "+amORpm;
+        const hours = String(created_date.getHours()===0?"12":created_date.getHours()>12?created_date.getHours()-12:created_date.getHours());
+        const createdAt =dateValue+" | "+((hours.length<2?"0"+hours:hours)+":"+(String(created_date.getMinutes()).length<2?"0"+created_date.getMinutes():created_date.getMinutes())+" "+amORpm);    
+    return createdAt;
     }
     const joinRoom = async(roomid:string,username:string,roomName:string)=>{
         axios.post(`${URL}chat/rooms/adduser`,{roomid,username,roomName}).then((res:any)=>{
@@ -112,7 +117,7 @@ const ChatMessages: React.FC<ChatRoomInterface> = ({currentroom,socket}):JSX.Ele
        <p><strong>{eachMessage.username}</strong></p>  
        <p><small>{eachMessage.text}</small></p>
        <p className='txt-tym'>
-       {eachMessage.createdAt}
+       {getTime(eachMessage.createdAt)}
           </p>
        </div>
        </li>)
