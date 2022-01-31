@@ -59,4 +59,7 @@
     .chat-nav-main-ctnr{
         grid-template-columns: 5% 95%;
     }
+    .wel-grid{
+    display: none;
+}
 }
